@@ -1,0 +1,18 @@
+.root{
+    -fx-background-color: #808080;
+
+}
+.button{
+    -fx-padding: 10pt;
+    -fx-width: 100;
+    -fx-height: 30pt;
+
+}
+.button:hover {
+    -fx-font-weight: bold;
+
+    -fx-background-color: #ffffff;
+}
+.table-view{
+    -fx-width: 300pt;
+}
