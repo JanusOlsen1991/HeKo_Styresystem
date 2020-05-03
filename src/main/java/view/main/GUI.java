@@ -48,8 +48,8 @@ public class GUI {
 		primaryStage.setTitle("Herlevkollegiets Indstillingsudvalg");
 		VBox venstreLayout = new VBox(5);
 		venstreLayout.setPadding(new Insets(30,20,0,10));
-		
-		
+
+
 		GridPane højreLayout = new GridPane();
 		højreLayout.setVgap(5);
 		højreLayout.setHgap(10);
@@ -81,11 +81,11 @@ public class GUI {
 		// Buttons og "Påmindelser/deadlines" til højre side af menuen
 
 		TableColumn<Deadline, LocalDate> hvornårColumn = new TableColumn<Deadline, LocalDate>("Hvornår");
-		hvornårColumn.setCellValueFactory(new PropertyValueFactory<>("hvornår")); 
-		
+		hvornårColumn.setCellValueFactory(new PropertyValueFactory<>("hvornår"));
+
 		TableColumn<Deadline, String> hvadColumn = new TableColumn<Deadline, String>("Hvad:");
 		hvadColumn.setCellValueFactory(new PropertyValueFactory<>("hvad"));
-		
+
 		TableColumn<Deadline, String> hvemColumn = new TableColumn<Deadline, String>("Hvem:");
 		hvemColumn.setCellValueFactory(new PropertyValueFactory<>("hvem"));
 
@@ -417,7 +417,7 @@ public class GUI {
 				// Always close files.
 				bufferedWriter.close();
 			} catch (IOException ex1) {
-				
+
 			}
 				try {
 					hovedMenu(primaryStage);

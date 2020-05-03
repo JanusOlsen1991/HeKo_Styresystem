@@ -34,7 +34,7 @@ public class VærelsesUdlejningsMenu {
         Button tilbageButton = new Button("Tilbage");
         tilbageButton.setOnAction(e -> {
             try {
-                gui.hovedmenu.hovedMenu(primaryStage);
+                gui.gui.hovedMenu(primaryStage);
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
