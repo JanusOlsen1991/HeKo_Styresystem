@@ -7,13 +7,18 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Deadline;
-import view.main.GUI;
+import view.GuiSingleton;
 
 import java.util.ArrayList;
 
 public class GUI_PopUps_Deadlines {
 	private Stage stage = new Stage();
 	private ArrayList<Deadline> list = new ArrayList<Deadline>();
+	private GuiSingleton gui;
+
+	public GUI_PopUps_Deadlines() {
+		this.gui = GuiSingleton.getInstance();
+	}
 
 	public ArrayList<Deadline> getList() {
 		return list;
@@ -43,7 +48,7 @@ public class GUI_PopUps_Deadlines {
 			Platform.runLater(new Runnable(){
 				@Override
 				public void run() {
-					tView.setItems(GUI.getDeadlines());
+					tView.setItems(gui.hovedMenu.getDeadlines());
 				}
 			});
 
