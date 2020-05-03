@@ -40,7 +40,7 @@ public class BeboerlisteMenu {
         Button tilbageButton = new Button("Tilbage");
         tilbageButton.setOnAction(e -> {
             try {
-                gui.gui.hovedMenu(primaryStage);
+                gui.hovedMenu.hovedMenu(primaryStage);
             } catch (Exception e1) {
 
                 e1.printStackTrace();

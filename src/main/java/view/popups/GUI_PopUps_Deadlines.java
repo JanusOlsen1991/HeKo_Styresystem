@@ -48,7 +48,7 @@ public class GUI_PopUps_Deadlines {
 			Platform.runLater(new Runnable(){
 				@Override
 				public void run() {
-					tView.setItems(gui.gui.getDeadlines());
+					tView.setItems(gui.hovedMenu.getDeadlines());
 				}
 			});
 
