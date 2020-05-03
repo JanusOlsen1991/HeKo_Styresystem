@@ -8,6 +8,7 @@ public class GuiSingleton {
 
     private static GuiSingleton instance = new GuiSingleton();
     public static HovedMenu hovedMenu = new HovedMenu();
+    public static DispensationsMenu dispensationsMenu = new DispensationsMenu();
     public static BeboerlisteMenu beboerlisteMenu = new BeboerlisteMenu();
     public static GUI gui= new GUI();
     public static ExcelConnection ec;

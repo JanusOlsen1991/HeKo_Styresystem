@@ -47,7 +47,7 @@ public class HovedMenu {
         Button studieKontrolButton = new Button("Studiekontrol");
         studieKontrolButton.setOnAction(e -> gui.studiekontrolMenu.studieKontrolMenu(primaryStage));
         Button dispensationsButton = new Button("Dispensation");
-        //dispensationsButton.setOnAction(e -> gui.dispensationsmenu.dispensationsMenu(primaryStage, tView));
+        dispensationsButton.setOnAction(e -> gui.dispensationsMenu.dispensationsMenu(primaryStage, tView));
         Button fremlejeButton = new Button("Fremleje");
         //fremlejeButton.setOnAction(e -> fremlejeMenu(primaryStage));
         Button værelsesudlejningsButton = new Button("Værelsesudlejning");
