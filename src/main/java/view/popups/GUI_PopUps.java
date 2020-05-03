@@ -15,6 +15,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.*;
 import view.main.GUI;
+import view.main.StudiekontrolMenu;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -573,7 +574,7 @@ public class GUI_PopUps {
 			tView.getItems().addAll(
 					ec.findBeboereTilOpretStudiekontrol(ec.findMånedsNummer(udløbsmåned.getValue().toString())));
 			tView.refresh();//TODO BEHØVES DEN?
-			Tab t = GUI.opretStudiekontrolTab(ec.getStudiekontroller().get(ec.getStudiekontroller().size()-1));
+			Tab t = StudiekontrolMenu.opretStudiekontrolTab(ec.getStudiekontroller().get(ec.getStudiekontroller().size()-1));
 			tP.getTabs().add(t);
 			
 			//laver deadlines til hovedmenu:
