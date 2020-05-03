@@ -1,4 +1,4 @@
-package view;
+package view.popups;
 
 import controller.ExcelConnection;
 import javafx.collections.FXCollections;
@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.*;
+import view.main.GUI;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -795,7 +796,7 @@ public class GUI_PopUps {
 			String hvem = "Indstillingen";
 			String hvad = "Udlej værelse " + værelse.getText() + " til d. " + overtagelsesdato.getValue().toString();
 			LocalDate hvornår = overtagelsesdato.getValue().minusDays(14);
-			
+			System.out.println("Jeg kommer tilbage hertil " + hvornår.toString() + hvem + hvad);
 			Deadline d = new Deadline(hvem , hvad, hvornår, null, ec);
 			ec.opretDeadlineIExcel(d);
 			ec.getDeadlines().clear();

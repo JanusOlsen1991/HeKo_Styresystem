@@ -1,4 +1,4 @@
-package view;
+package view.main;
 
 import controller.ExcelConnection;
 import javafx.collections.FXCollections;
@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.*;
+import view.popups.GUI_PopUps;
+import view.popups.GUI_PopUps_Deadlines;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -119,7 +121,7 @@ public class GUI {
 			Deadline d = tView.getSelectionModel().getSelectedItem();
 			d.setKlaret(true);
 			ec.opretDeadlineIExcel(d);
-			deadlineValgt.forEach(alleDeadlines::remove);
+			//deadlineValgt.forEach(alleDeadlines::remove); //TODO den vil ikke opdatere gui uden for en JavaFX thread (tror jeg)
 
 		});
 		TextField filter = new TextField();
@@ -170,8 +172,6 @@ public class GUI {
 		tView.setItems(sortedData);
 
 
-
-
 		scene = new Scene(hb, 1300, 600);
 		scene.getStylesheets().add("hekostyling.css");
 		primaryStage.setScene(scene);
@@ -179,7 +179,7 @@ public class GUI {
 
 	}
 
-	private ObservableList<Deadline> getDeadlines() {
+	public static ObservableList<Deadline> getDeadlines() {
 		// Der skal lægges ind og testes for 'isKlaret'
 		ArrayList<Deadline> alleDeadlines = ec.getDeadlines();
 		ArrayList<Deadline> temp = new ArrayList<Deadline>();
@@ -192,6 +192,12 @@ public class GUI {
 		ObservableList<Deadline> deadlines = FXCollections.observableArrayList(temp);
 		return deadlines;
 	}
+
+	/**
+	 *
+	 * @param columnProps
+	 * @return
+	 */
 
 	/**
 	 * 
@@ -304,6 +310,7 @@ public class GUI {
 		scene.getStylesheets().add("hekostyling.css");
 		primaryStage.setScene(scene);
 	}
+
 
 	/**
 	 * 
@@ -1095,8 +1102,6 @@ public class GUI {
 	}
 
 	public void filplacering(Stage primaryStage) {
-		// TODO hent filplacering fra txt, hvis denne ikke kan findes , da skal filen så
-		// oprettes på et sted og filplacering skal gemmes
 
 		GridPane gP = new GridPane();
 		Label l = new Label("Filplacering:");
@@ -1128,7 +1133,6 @@ public class GUI {
 			text.setText(excelplacering.getAbsolutePath() + "\\IndstillingsInfo.xlsx");
 
 		});
-		//TODO test om git virker
 
 		Button startButton = new Button("Start");
 		startButton.setOnAction(event -> {
@@ -1136,7 +1140,6 @@ public class GUI {
 			try {
 				GUI.ec = new ExcelConnection(s);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			//Skriver  

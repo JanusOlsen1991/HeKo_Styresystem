@@ -1,11 +1,13 @@
-package view;
+package view.popups;
 
 import controller.ExcelConnection;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Deadline;
+import view.main.GUI;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,18 @@ public class GUI_PopUps_Deadlines {
 		opretButton.setOnAction(e -> {
 			Deadline d = new Deadline(hvem.getText(), hvad.getText(), hvornår.getValue(), null, ec);
 			ec.opretDeadlineIExcel(d);
-			tView.getItems().add(d);
+			//tView.getItems().add(d); //TODO this makes it fail
+			list.add(d);
+			//TableView tv = new TableView();
+			Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+					tView.setItems(GUI.getDeadlines());
+				}
+			});
+
+			//tView.refresh();
+			//TODO sæt opdatering i gui i gang
 			stage.close();
 		});
 		Button annullerButton = new Button("Annuller");

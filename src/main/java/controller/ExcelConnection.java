@@ -1004,13 +1004,17 @@ public class ExcelConnection {
 //				String sVærelse = workbook.getSheetAt(5).getRow(i).getCell(1).getStringCellValue(); // Hvilken celle?
 //				String sNavn = workbook.getSheetAt(5).getRow(i).getCell(2).getStringCellValue(); // Hvilken celle?
 				String idCheck = workbook.getSheetAt(5).getRow(i).getCell(5).getStringCellValue();
+				String signedByCheck = workbook.getSheetAt(5).getRow(i).getCell(4).getStringCellValue(); //Hvis der ikke er nogen værdi her, så er det et ledigt værelse der skal udfyldes
+				boolean nytVærelse =true;
+				if( signedByCheck == null || !signedByCheck.equals(""))
+					nytVærelse = false;
 
 				// Hvis det passer, så skriv til værelsesnummeret
-				if (idCheck.equals(værelsesudlejning.getID().toString())) {
+				if (idCheck.equals(værelsesudlejning.getID().toString())&& nytVærelse) {
 //					if (sNavn == null || sNavn.equals("")) {
 						int celleNr = 0;
-					System.out.println("fejl1" + idCheck);
-					System.out.println("fejl1" + værelsesudlejning.getID());
+					//System.out.println("fejl1" + idCheck);
+					//System.out.println("fejl1" + værelsesudlejning.getID());
 
 						Date d1 = konverterLocalDateTilDate(værelsesudlejning.getIndflytningsdato());
 						workbook.getSheetAt(5).getRow(i).getCell(celleNr).setCellValue(d1);
