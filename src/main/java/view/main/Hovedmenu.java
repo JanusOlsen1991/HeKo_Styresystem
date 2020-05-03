@@ -49,7 +49,7 @@ public class HovedMenu {
         Button dispensationsButton = new Button("Dispensation");
         dispensationsButton.setOnAction(e -> gui.dispensationsMenu.dispensationsMenu(primaryStage, tView));
         Button fremlejeButton = new Button("Fremleje");
-        //fremlejeButton.setOnAction(e -> fremlejeMenu(primaryStage));
+        fremlejeButton.setOnAction(e -> gui.fremlejeMenu.fremlejeMenu(primaryStage));
         Button værelsesudlejningsButton = new Button("Værelsesudlejning");
         værelsesudlejningsButton.setOnAction(e -> gui.værelsesudlejningsmenu.værelsesUdlejningMenu(primaryStage));
 
