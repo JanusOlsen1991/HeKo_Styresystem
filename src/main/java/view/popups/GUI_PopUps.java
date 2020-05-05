@@ -217,8 +217,7 @@ public class GUI_PopUps {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void opretDispensation(ExcelConnection ec, TableView<Dispensation> tableView,
-                                  TableView<Deadline> tViewHMenu, Dispensation dispensation, boolean rediger) {
+	public void opretDispensation(ExcelConnection ec, TableView<Dispensation> tableView, Dispensation dispensation, boolean rediger) {
 		stage.setTitle("Rediger beboeroplysninger");
 //		 stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -347,7 +346,7 @@ public class GUI_PopUps {
 			
 			// Deadlines
 			for (Deadline d : list) {
-				Deadline deadline = new Deadline(d.getHvem(), d.getHvad(), d.getHvornår(), null, ec);
+				Deadline deadline = new Deadline(d.getHvem(), d.getHvad(), d.getHvornår(), null);
 				ec.opretDeadlineIExcel(deadline);
 				ec.getDeadlines().clear();
 				ec.hentDeadlinesFraExcel();
@@ -582,12 +581,12 @@ public class GUI_PopUps {
 			String afslut = " Afslut studiekontrol for " + udløbsmåned.getValue().toString();
 
 			//TODO der skker måske noget her? -
-			Deadline dPåmind = new Deadline("Indstillingen", påmind, påmindelsesdato.getValue(), null, ec);
+			Deadline dPåmind = new Deadline("Indstillingen", påmind, påmindelsesdato.getValue(), null);
 			ec.opretDeadlineIExcel(dPåmind); 
 			ec.getDeadlines().clear();
 			ec.hentDeadlinesFraExcel();
 			
-			Deadline dAfslut = new Deadline("Indstillingen", afslut, afleveringsfrist.getValue(), null, ec);
+			Deadline dAfslut = new Deadline("Indstillingen", afslut, afleveringsfrist.getValue(), null);
 			ec.opretDeadlineIExcel(dAfslut);
 			ec.getDeadlines().clear();
 			ec.hentDeadlinesFraExcel();
@@ -791,14 +790,13 @@ public class GUI_PopUps {
 			ec.getVærelsesudlejning().clear();
 			ec.hentVærelsesudlejningFraExcel();
 			tView.getItems().add(vu);
-			tView.refresh();
-			
+
 			//Opretter deadline til hovedmenu
 			String hvem = "Indstillingen";
 			String hvad = "Udlej værelse " + værelse.getText() + " til d. " + overtagelsesdato.getValue().toString();
 			LocalDate hvornår = overtagelsesdato.getValue().minusDays(14);
 			System.out.println("Jeg kommer tilbage hertil " + hvornår.toString() + hvem + hvad);
-			Deadline d = new Deadline(hvem , hvad, hvornår, null, ec);
+			Deadline d = new Deadline(hvem , hvad, hvornår, null);
 			ec.opretDeadlineIExcel(d);
 			ec.getDeadlines().clear();
 			ec.hentDeadlinesFraExcel();

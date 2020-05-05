@@ -23,7 +23,7 @@ public class DispensationsMenu {
 
 
 
-    public void dispensationsMenu(Stage primaryStage, TableView<Deadline> tViewHMenu) {
+    public void dispensationsMenu(Stage primaryStage) {
 
         BorderPane borderP = new BorderPane();
 
@@ -47,7 +47,7 @@ public class DispensationsMenu {
         // Start knappen
         Button startDispButton = new Button("Kom i gang");
         startDispButton.setOnAction(e -> {
-            popUp.opretDispensation(gui.ec, tView, tViewHMenu, null, false);// , tView
+            popUp.opretDispensation(gui.ec, tView, null, false);// , tView
         });
 
         tView.setPlaceholder(startDispButton);
@@ -70,11 +70,11 @@ public class DispensationsMenu {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     // TODO Opret - rediger i dispensations metode.
                     Dispensation clickedRow = row.getItem();
-                    popUp.opretDispensation(gui.ec, tView, tViewHMenu, clickedRow, true);
+                    popUp.opretDispensation(gui.ec, tView, clickedRow, true);
                 }
                 if (row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 
-                    popUp.opretDispensation(gui.ec, tView, tViewHMenu, null, false);// , tView
+                    popUp.opretDispensation(gui.ec, tView, null, false);// , tView
                 }
             });
             return row;
