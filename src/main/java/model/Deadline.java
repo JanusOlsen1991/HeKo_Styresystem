@@ -3,13 +3,14 @@ package model;
 import controller.ExcelConnection;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 /**
  * 
  * @author Janus Klassen anvendes til at oprette deadlines/påmindelser i
  *         "hovedmenuen".
  */
-public class Deadline {
+public class Deadline implements Comparable<Deadline> {
 	private String hvem;
 	private String hvad;
 	private LocalDate hvornår;
@@ -30,7 +31,7 @@ public class Deadline {
 	 *            : ID skal altid angives
 	 * 
 	 */
-	public Deadline(String hvem, String hvad, LocalDate hvornår, String ID, ExcelConnection ec) {
+	public Deadline(String hvem, String hvad, LocalDate hvornår, String ID) {
 
 		this.hvem = hvem;
 		this.hvad = hvad;
@@ -38,7 +39,7 @@ public class Deadline {
 
 		klaret = false;
 		if(ID == null) {
-			this.ID = Integer.toString(ec.getDeadlines().size());
+			this.ID = UUID.randomUUID().toString();
 		} else
 		this.ID = ID;
 
@@ -84,4 +85,8 @@ public class Deadline {
 		this.ID = ID;
 	}
 
+	@Override
+	public int compareTo(Deadline d) {
+		return this.hvornår.compareTo(d.hvornår);
+	}
 }

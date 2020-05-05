@@ -19,10 +19,12 @@ import view.popups.GUI_PopUps_Deadlines;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HovedMenu {
     GUI_PopUps_Deadlines popUpDead = new GUI_PopUps_Deadlines();
     static GuiSingleton gui;
+    TableView<Deadline> tView;
 
     public void hovedMenu(Stage primaryStage) {
 
@@ -40,20 +42,20 @@ public class HovedMenu {
 //		borderP.setLeft(venstreLayout);
 //		borderP.setCenter(højreLayout);
 
-        TableView<Deadline> tView = new TableView<Deadline>();
         // Buttons til venstre side af menuen
         Button beboerlisteButton = new Button("Beboerliste");
         beboerlisteButton.setOnAction(e -> gui.beboerlisteMenu.beboerlisteMenu(primaryStage));
         Button studieKontrolButton = new Button("Studiekontrol");
         studieKontrolButton.setOnAction(e -> gui.studiekontrolMenu.studieKontrolMenu(primaryStage));
         Button dispensationsButton = new Button("Dispensation");
-        dispensationsButton.setOnAction(e -> gui.dispensationsMenu.dispensationsMenu(primaryStage, tView));
+        dispensationsButton.setOnAction(e -> gui.dispensationsMenu.dispensationsMenu(primaryStage));
         Button fremlejeButton = new Button("Fremleje");
         fremlejeButton.setOnAction(e -> gui.fremlejeMenu.fremlejeMenu(primaryStage));
         Button værelsesudlejningsButton = new Button("Værelsesudlejning");
         værelsesudlejningsButton.setOnAction(e -> gui.værelsesudlejningsmenu.værelsesUdlejningMenu(primaryStage));
 
         Label l = new Label("Ingen nuværende deadlines");
+        tView = new TableView();
         tView.setPlaceholder(l);
         tView.setMinWidth(1000);
         // Tilføjer buttons til venstre side.
@@ -72,15 +74,11 @@ public class HovedMenu {
         hvemColumn.setCellValueFactory(new PropertyValueFactory<>("hvem"));
 
         tView.setItems(getDeadlines());
-
         tView.getColumns().addAll(hvornårColumn, hvadColumn, hvemColumn);
 
-        // Sorterer så første deadlines kommer først
-        hvornårColumn.setSortType(TableColumn.SortType.ASCENDING);
-        tView.getSortOrder().add(hvornårColumn);
+//        hvornårColumn.setSortType(TableColumn.SortType.ASCENDING);
+//        tView.getSortOrder().add(hvornårColumn);
 
-        // Herunder oprettes en metode til at håndtere dobbeltklik og hente objekter
-        // (hel række)
         tView.setRowFactory(tv -> {
             TableRow<Deadline> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -99,13 +97,10 @@ public class HovedMenu {
 
         Button fjernButton = new Button("Fjern påmindelse");
         fjernButton.setOnAction(event -> {
-            ObservableList<Deadline> deadlineValgt, alleDeadlines;
-            alleDeadlines = tView.getItems();
-            deadlineValgt = tView.getSelectionModel().getSelectedItems();
-            Deadline d = tView.getSelectionModel().getSelectedItem();
-            d.setKlaret(true);
-            gui.ec.opretDeadlineIExcel(d);
-            //deadlineValgt.forEach(alleDeadlines::remove); //TODO den vil ikke opdatere gui uden for en JavaFX thread (tror jeg)
+            Deadline selectedItem = tView.getSelectionModel().getSelectedItem();
+            tView.getItems().remove(selectedItem);
+            selectedItem.setKlaret(true);
+            gui.ec.opretDeadlineIExcel(selectedItem);
 
         });
         TextField filter = new TextField();
@@ -119,41 +114,6 @@ public class HovedMenu {
         højreLayout.add(tilføjButton, 2, 10);
         højreLayout.add(fjernButton, 3, 10);
         højreLayout.add(filter,4, 10);
-
-
-        //SORTER DATA I TABLEVIEW
-        // 1. Wrap the ObservableList in a FilteredList (initially display all data).
-        FilteredList<Deadline> filteredData = new FilteredList<>(getDeadlines(), p -> true);
-
-        // 2. Set the filter Predicate whenever the filter changes.
-        filter.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(deadline -> {
-
-                // If filter text is empty, display all persons.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                // Compare first name and last name of every person with filter text.
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (deadline.getHvad().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches first name.
-                } else if (deadline.getHvem().toLowerCase().contains(lowerCaseFilter)) {
-                    return true; // Filter matches last name.
-                }
-                return false; // Does not match.
-            });
-        });
-
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<Deadline> sortedData = new SortedList<>(filteredData);
-
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(tView.comparatorProperty());
-
-        // 5. Add sorted (and filtered) data to the table.
-        tView.setItems(sortedData);
 
         Scene scene = gui.gui.getScene();
         scene = new Scene(hb, 1300, 600);
@@ -172,8 +132,10 @@ public class HovedMenu {
             if (d.isKlaret() == false)
                 temp.add(d);
         }
+        Collections.sort(temp);
 
         ObservableList<Deadline> deadlines = FXCollections.observableArrayList(temp);
         return deadlines;
     }
+
 }

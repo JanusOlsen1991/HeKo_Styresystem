@@ -581,7 +581,7 @@ public class ExcelConnection {
 
 				// Sidste del i deadline er null, da der altid vil være et ID på når der loades
 				// fra excel
-				Deadline deadline = new Deadline(hvem, hvad, hvornår, ID, this);
+				Deadline deadline = new Deadline(hvem, hvad, hvornår, ID);
 				deadline.setKlaret(klaret);
 				deadlines.add(deadline);
 

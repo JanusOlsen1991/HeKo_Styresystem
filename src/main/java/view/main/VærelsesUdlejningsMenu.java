@@ -71,13 +71,11 @@ public class VærelsesUdlejningsMenu {
                 if (row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 
                     popUp.opretLedigtVærelse(gui.ec, tView1);
-                    tView1.refresh();
                 }
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 
                     Værelsesudlejning clickedRow = row.getItem();
                     popUp.udfyldLedigtVærelse(gui.ec, tView1, tView2, clickedRow, false);
-                    tView1.refresh();
                 }
             });
             return row;
@@ -115,7 +113,6 @@ public class VærelsesUdlejningsMenu {
                     // TODO Lav noget her der retter info ved værelsesudlejning
                     Værelsesudlejning clickedRow = row.getItem();
                     popUp.udfyldLedigtVærelse(gui.ec, tView1, tView2, clickedRow, true);
-                    tView2.refresh();
                 }
 
             });

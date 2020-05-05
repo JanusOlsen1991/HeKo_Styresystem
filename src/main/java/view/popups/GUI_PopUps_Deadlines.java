@@ -2,6 +2,7 @@ package view.popups;
 
 import controller.ExcelConnection;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -13,19 +14,19 @@ import java.util.ArrayList;
 
 public class GUI_PopUps_Deadlines {
 	private Stage stage = new Stage();
-	private ArrayList<Deadline> list = new ArrayList<Deadline>();
+	//private ArrayList<Deadline> list = new ArrayList<Deadline>();
 	private GuiSingleton gui;
 
 	public GUI_PopUps_Deadlines() {
 		this.gui = GuiSingleton.getInstance();
 	}
 
-	public ArrayList<Deadline> getList() {
+/*	public ArrayList<Deadline> getList() {
 		return list;
 	}
 	public void setList(ArrayList<Deadline> list) {
 		this.list = list;
-	}
+	}*/
 	public void createDeadline(ExcelConnection ec, TableView<Deadline> tView) {
 
 		// stage.initModality(Modality.APPLICATION_MODAL);
@@ -40,20 +41,11 @@ public class GUI_PopUps_Deadlines {
 
 		Button opretButton = new Button("Tilføj påmindelse");
 		opretButton.setOnAction(e -> {
-			Deadline d = new Deadline(hvem.getText(), hvad.getText(), hvornår.getValue(), null, ec);
+			Deadline d = new Deadline(hvem.getText(), hvad.getText(), hvornår.getValue(), null);
 			ec.opretDeadlineIExcel(d);
-			//tView.getItems().add(d); //TODO this makes it fail
-			list.add(d);
-			//TableView tv = new TableView();
-			Platform.runLater(new Runnable(){
-				@Override
-				public void run() {
-					tView.setItems(gui.hovedMenu.getDeadlines());
-				}
-			});
-
-			//tView.refresh();
-			//TODO sæt opdatering i gui i gang
+			ec.getDeadlines().clear();
+			ec.hentDeadlinesFraExcel();
+			tView.getItems().add(d);
 			stage.close();
 		});
 		Button annullerButton = new Button("Annuller");
@@ -75,7 +67,7 @@ public class GUI_PopUps_Deadlines {
 
 		Scene scene = new Scene(layout);
 		stage.setScene(scene);
-		stage.showAndWait();
+		stage.show();
 	}
 	public void changeDeadline(Deadline deadline, ExcelConnection ec, TableView<Deadline> tView) {
 
