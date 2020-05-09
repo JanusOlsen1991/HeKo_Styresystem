@@ -19,6 +19,7 @@ import view.popups.GUI_PopUps_Deadlines;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class FremlejeMenu {
     static GUI_PopUps popUp = new GUI_PopUps();
@@ -30,15 +31,20 @@ public class FremlejeMenu {
         BorderPane borderP = new BorderPane();
         // venstre side
         Button tilbageButton = new Button("Tilbage");
-        tilbageButton.setOnAction(e -> {
-            try {
-                gui.hovedMenu.hovedMenu(primaryStage);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
+        tilbageButton.setOnAction(e -> gui.hovedMenu.hovedMenu(primaryStage));
+        TableView<Beboer> tView = createTable();
+        VBox vb = new VBox(tilbageButton);
+        borderP.setLeft(vb);
+        borderP.setCenter(tView);
 
-        });
-        TableView<Beboer> tView = new TableView<Beboer>();
+        Scene scene = gui.gui.getScene();
+        scene = new Scene(borderP, 900, 700);
+        scene.getStylesheets().add("hekostyling.css");
+        primaryStage.setScene(scene);
+    }
+
+    private TableView<Beboer> createTable() {
+        TableView<Beboer> tView = new TableView();
         TableColumn<Beboer, String> værelseColumn = new TableColumn<Beboer, String>("Værelse");
         værelseColumn.setCellValueFactory(new PropertyValueFactory<>("værelse"));
         TableColumn<Beboer, String> navnColumn = new TableColumn<Beboer, String>("Navn");
@@ -85,28 +91,19 @@ public class FremlejeMenu {
 
         tView.getColumns().addAll(værelseColumn, navnColumn, indflytningColumn, telefonColumn, uddStedColumn,
                 uddannelseColumn, påbegyndtUddColumn, afslutningUddColumn, lejeaftalensUdløbColumn);
-        VBox vb = new VBox(tilbageButton);
-        borderP.setLeft(vb);
-        borderP.setCenter(tView);
-
-        Scene scene = gui.gui.getScene();
-        scene = new Scene(borderP, 900, 700);
-        scene.getStylesheets().add("hekostyling.css");
-        primaryStage.setScene(scene);
+        return tView;
     }
 
     private ObservableList<Beboer> getFremlejere() {
-        // Der skal lægges ind og testes for 'isKlaret'
         ArrayList<Beboer> alleFremlejere = gui.ec.getFremlejere();
-        ArrayList<Beboer> temp = new ArrayList<Beboer>();
+        ArrayList<Beboer> temp = new ArrayList();
 
         for (Beboer b : alleFremlejere) {
             if (b.getLejeaftalensUdløb().isAfter(LocalDate.now())) {
                 temp.add(b);
             }
         }
-
-        ObservableList<Beboer> beboere = FXCollections.observableArrayList(temp);
-        return beboere;
+        Collections.sort(temp);
+        return FXCollections.observableArrayList(temp);
     }
 }
