@@ -57,7 +57,7 @@ public class DispensationsMenu {
 
         Button startDispButton = new Button("Kom i gang");
         startDispButton.setOnAction(e -> {
-            popUp.opretDispensation(gui.ec, tView, null, false);// , tView
+            popUp.opretDispensation(tView, null, false);// , tView
         });
 
         tView.setPlaceholder(startDispButton);
@@ -79,11 +79,11 @@ public class DispensationsMenu {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     Dispensation clickedRow = row.getItem();
-                    popUp.opretDispensation(gui.ec, tView, clickedRow, true);
+                    popUp.opretDispensation(tView, clickedRow, true);
                 }
                 if (row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 
-                    popUp.opretDispensation(gui.ec, tView, null, false);// , tView
+                    popUp.opretDispensation(tView, null, false);// , tView
                 }
             });
             return row;

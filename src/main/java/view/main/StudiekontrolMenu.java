@@ -53,7 +53,7 @@ public class StudiekontrolMenu {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     Beboer clickedRow = row.getItem();
-                    popUp.redigerBeboeroplysninger(clickedRow, gui.ec, tView1, false);
+                    popUp.redigerBeboeroplysninger(clickedRow, tView1, false);
 
                 }
             });
@@ -162,7 +162,7 @@ public class StudiekontrolMenu {
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     Beboer clickedRow = row.getItem();
-                    popUp.redigerBeboeroplysninger(clickedRow, gui.ec, tView, false);
+                    popUp.redigerBeboeroplysninger(clickedRow, tView, false);
                     tView.refresh(); // nødvendig?
                 }
             });

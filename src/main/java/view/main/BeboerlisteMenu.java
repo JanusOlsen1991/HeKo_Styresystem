@@ -211,7 +211,7 @@ public class BeboerlisteMenu implements IParentTable{
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 
                     Beboer clickedRow = row.getItem();
-                    popUp.redigerBeboeroplysninger(clickedRow, gui.ec, tableView, false);
+                    popUp.redigerBeboeroplysninger(clickedRow, tableView, false);
 
                 }
                 if (row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {

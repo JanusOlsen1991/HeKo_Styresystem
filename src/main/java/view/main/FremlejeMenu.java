@@ -73,10 +73,10 @@ public class FremlejeMenu {
 
                     Beboer clickedRow = row.getItem();
                     // TODO Hvad skal ske ved fremleje
-                    popUp.redigerBeboeroplysninger(clickedRow, gui.ec, tView, true);
+                    popUp.redigerBeboeroplysninger(clickedRow, tView, true);
                 }
                 if (row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                    popUp.opretNyFremlejer(gui.ec, tView);
+                    popUp.opretNyFremlejer(tView);
                 }
             });
             return row;
@@ -84,7 +84,7 @@ public class FremlejeMenu {
 
         Button buttonBegynd = new Button("Kom i gang");
         buttonBegynd.setOnAction(event -> {
-            popUp.opretNyFremlejer(gui.ec, tView);
+            popUp.opretNyFremlejer(tView);
         });
         tView.setPlaceholder(buttonBegynd);
         tView.setItems(getFremlejere());

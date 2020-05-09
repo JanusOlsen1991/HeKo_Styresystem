@@ -26,7 +26,6 @@ import java.util.Date;
  */
 
 public class ExcelConnection {
-	// Controller oprettes selv som et objekt i viewet
 	private ArrayList<Beboer> beboere = new ArrayList<Beboer>();
 	private ArrayList<Deadline> deadlines = new ArrayList<Deadline>();
 	private ArrayList<Beboer> fremlejere = new ArrayList<Beboer>();
@@ -34,9 +33,7 @@ public class ExcelConnection {
 	private ArrayList<Værelsesudlejning> værelsesudlejning = new ArrayList<Værelsesudlejning>();
 	private ArrayList<Dispensation> dispensationer = new ArrayList<Dispensation>();
 	private String filnavn = null; // "IndstillingsInfo.xlsx"; //TODO skal tage i mod filplaceringen i konstruktøren
-	// private String filnavn =
-	// "C:/Users/Janus/Dropbox/Indstillingen/Beboerliste/IndstillingsInfo.xlsx"; -
-	// Denne virker til DropBox Fra min PC
+
 
 	public ExcelConnection(String excelplacering) throws Exception{
 		this.filnavn = excelplacering;
@@ -172,7 +169,7 @@ public class ExcelConnection {
 	private ArrayList<Deadline> findDispensationsDeadlines(String deadlinesID) {
 		ArrayList<Deadline> list = new ArrayList<Deadline>();
 
-		String[] temp = deadlinesID.split("-");
+		String[] temp = deadlinesID.split("#");
 
 		for (int i = 0; i < temp.length; i++) {
 			String s = temp[i];
@@ -532,7 +529,7 @@ public class ExcelConnection {
 				Enum<Studiekontrolstatus> studiekontrolstatus = konverterStringTilEnum(
 						row.getCell(++kollonnenummer).getStringCellValue());
 
-				Beboer beboer = new Beboer(værelse, navn, fremlejeStartdato, fremlejeSlutdato, telefonnummer,
+				Beboer beboer = new Beboer(navn, værelse, fremlejeStartdato, fremlejeSlutdato, telefonnummer,
 						studiekontrolstatus, uddannelsessted, uddannelsesretning, uddStart, uddSlut);
 				this.fremlejere.add(beboer);
 
