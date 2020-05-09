@@ -14,7 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.*;
+import view.GuiSingleton;
 import view.main.GUI;
+import view.main.IParentTable;
 import view.main.StudiekontrolMenu;
 
 import java.io.File;
@@ -22,14 +24,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class GUI_PopUps {
-	// ExcelConnection ec = new ExcelConnection();
 	private Stage stage = new Stage();
 	private GUI_PopUps_Deadlines popUpDead = new GUI_PopUps_Deadlines();
+	private GuiSingleton gui = GuiSingleton.getInstance();
 
-	public void opretNyBeboeroplysninger(ExcelConnection ec, TableView<Beboer> tView1, TableView<Beboer> tView2,
-                                         TableView<Beboer> tView3, TableView<Beboer> tView4, TableView<Beboer> tView5, TableView<Beboer> tView6) {
+	public void opretNyBeboeroplysninger(IParentTable baseGui) {
 		stage.setTitle("Rediger beboeroplysninger");
-//		 stage.initModality(Modality.APPLICATION_MODAL);
 
 		GridPane layout = new GridPane();
 		layout.setHgap(5);
@@ -60,44 +60,17 @@ public class GUI_PopUps {
 
 		Button gemButton = new Button("Opret beboer");
 		gemButton.setOnAction(e -> {
-			Studiekontrolstatus status = (Studiekontrolstatus) ec
+			Studiekontrolstatus status = (Studiekontrolstatus) gui.ec
 					.konverterStringTilEnum(studiekontrolStatus.getValue());
 			Beboer b = new Beboer(navn.getText(), værelse.getText(), indflytningsdato.getValue(),
 					lejeaftalensUdløb.getValue(), telefonnummer.getText(), status, uddannelsessted.getText(),
 					uddannelsesretning.getText(), uddStart.getValue(), uddSlut.getValue());
 
-			ec.opretBeboerIExcel(b);
-			ec.getBeboere().clear();
-			ec.hentBeboereFraExcel();
+			gui.ec.opretBeboerIExcel(b);
+			gui.ec.getBeboere().clear();
+			gui.ec.hentBeboereFraExcel();
+			baseGui.update(b, værelse.getText());
 
-			tView1.getItems().add(b);
-			tView1.refresh();
-
-			char c = værelse.getText().charAt(0);
-			switch (c) {
-			case '2':
-				tView2.getItems().add(b);
-				tView2.refresh();
-				break;
-			case '3':
-				tView3.getItems().add(b);
-				tView3.refresh();
-				break;
-			case '4':
-				tView4.getItems().add(b);
-				tView4.refresh();
-				break;
-			case '5':
-				tView5.getItems().add(b);
-				tView5.refresh();
-				break;
-			case '6':
-				tView6.getItems().add(b);
-				tView6.refresh();
-				break;
-			default:
-				System.out.println("Værelset findes ikke");
-			}
 
 			stage.close();
 		});
