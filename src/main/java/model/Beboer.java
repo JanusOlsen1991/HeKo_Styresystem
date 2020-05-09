@@ -4,7 +4,7 @@ import controller.ExcelConnection;
 
 import java.time.LocalDate;
 
-public class Beboer {
+public class Beboer implements Comparable<Beboer>{
 	private String navn;
 	private String værelse;
 	private LocalDate indflytningsdato;
@@ -141,8 +141,9 @@ public class Beboer {
 		this.lejeaftalensUdløb = lejeaftalensUdløb;
 	}
 
-//	public void setStatusPåStudiekontrol(String statusPåStudiekontrol) {
-//		this.statusPåStudiekontrol = statusPåStudiekontrol; //TODO Tror ikke den skal bruges men ellers skal enum på status også ændres
-//	}
 
+	@Override
+	public int compareTo(Beboer o) {
+		return this.værelse.compareTo(o.getVærelse());
+	}
 }

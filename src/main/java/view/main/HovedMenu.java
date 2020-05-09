@@ -39,9 +39,6 @@ public class HovedMenu {
         højreLayout.setHgap(10);
         HBox hb = new HBox(venstreLayout, højreLayout);
 
-//		borderP.setLeft(venstreLayout);
-//		borderP.setCenter(højreLayout);
-
         // Buttons til venstre side af menuen
         Button beboerlisteButton = new Button("Beboerliste");
         beboerlisteButton.setOnAction(e -> gui.beboerlisteMenu.beboerlisteMenu(primaryStage));
@@ -76,14 +73,10 @@ public class HovedMenu {
         tView.setItems(getDeadlines());
         tView.getColumns().addAll(hvornårColumn, hvadColumn, hvemColumn);
 
-//        hvornårColumn.setSortType(TableColumn.SortType.ASCENDING);
-//        tView.getSortOrder().add(hvornårColumn);
-
         tView.setRowFactory(tv -> {
             TableRow<Deadline> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-
                     Deadline clickedRow = row.getItem();
                     popUpDead.changeDeadline(clickedRow, gui.ec, tView);
                     tView.refresh();
@@ -96,20 +89,13 @@ public class HovedMenu {
         tilføjButton.setOnAction(event -> popUpDead.createDeadline(gui.ec, tView));
 
         Button fjernButton = new Button("Fjern påmindelse");
-        fjernButton.setOnAction(event -> {
-            Deadline selectedItem = tView.getSelectionModel().getSelectedItem();
-            tView.getItems().remove(selectedItem);
-            selectedItem.setKlaret(true);
-            gui.ec.opretDeadlineIExcel(selectedItem);
+        fjernButton.setOnAction(event -> fjernButtonClicked());
 
-        });
         TextField filter = new TextField();
         filter.setPromptText("Søg...");
         filter.setPrefWidth(150);
         filter.setMaxWidth(150);
 
-
-        // Tilføjer til højre side af menuen
         højreLayout.add(tView, 2, 3, 3, 6);
         højreLayout.add(tilføjButton, 2, 10);
         højreLayout.add(fjernButton, 3, 10);
@@ -123,14 +109,22 @@ public class HovedMenu {
 
     }
 
+    private void fjernButtonClicked() {
+        Deadline selectedItem = tView.getSelectionModel().getSelectedItem();
+        tView.getItems().remove(selectedItem);
+        selectedItem.setKlaret(true);
+        gui.ec.opretDeadlineIExcel(selectedItem);
+    }
+
     public static ObservableList<Deadline> getDeadlines() {
-        // Der skal lægges ind og testes for 'isKlaret'
+
         ArrayList<Deadline> alleDeadlines = gui.ec.getDeadlines();
-        ArrayList<Deadline> temp = new ArrayList<Deadline>();
+        ArrayList<Deadline> temp = new ArrayList<>();
 
         for (Deadline d : alleDeadlines) {
-            if (d.isKlaret() == false)
+            if (d.isKlaret() == false) {
                 temp.add(d);
+            }
         }
         Collections.sort(temp);
 

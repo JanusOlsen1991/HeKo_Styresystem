@@ -4,6 +4,7 @@ import controller.ExcelConnection;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * 
@@ -34,20 +35,18 @@ public class Dispensation {
 	 *            separation foregår før de gives til konstruktøren.
 	 * @param ID
 	 *            : anvendes hvis Dispensationen allerede har et ID
-	 * @param dispensationer:
+	 * @param deadlines:
 	 *            Denne parameter gives hvis ikke der gives et ID.
 	 */
 	public Dispensation(Beboer beboer, LocalDate startDato, LocalDate slutDato, boolean iGang, String ID,
-                        ArrayList<Deadline> deadlines, ExcelConnection ec) {
+                        ArrayList<Deadline> deadlines) {
 		this.beboer = beboer;
 		this.startDato = startDato;
 		this.slutDato = slutDato;
 		this.iGang = iGang;
 		this.deadlines = deadlines;
 		if (ID == null) {
-			ID = "disp" + ec.getDispensationer().size();
-			//Bør have reference til Deadlines
-
+			this.ID = UUID.randomUUID().toString();
 		} else {
 			this.ID = ID;
 		}
@@ -110,9 +109,8 @@ public class Dispensation {
 		if (d > 0) {
 
 			for (int i = 0; i < d; i++) {
-				// Hvis der er flere deadlines tilbage (d-1 da size() vil være +1 i forhold til plads i arraylist. Dvs. i.
 				if (d-1 > i) {
-					s += deadlines.get(i).getID() + "-";
+					s += deadlines.get(i).getID() + "#";
 				}else
 					s += deadlines.get(i).getID();
 			}

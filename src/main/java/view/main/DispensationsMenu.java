@@ -29,13 +29,7 @@ public class DispensationsMenu {
 
         // Venstre side af menuen
         Button tilbageButton = new Button("Tilbage");
-        tilbageButton.setOnAction(e -> {
-            try {
-                gui.hovedMenu.hovedMenu(primaryStage);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        });
+        tilbageButton.setOnAction(e -> gui.hovedMenu.hovedMenu(primaryStage));
 
         VBox vb = new VBox(tilbageButton);
         borderP.setLeft(vb);
@@ -43,11 +37,27 @@ public class DispensationsMenu {
         TabPane tP = new TabPane();
         borderP.setCenter(tP);
 
+        TableView<Dispensation> tView = createTable();
+
+        Tab tab1 = new Tab("Aktive dispensationer");
+        tab1.setClosable(false);
+        tab1.setContent(tView);
+        tP.getTabs().add(tab1);
+
+        Scene scene = gui.gui.getScene();
+
+        scene = new Scene(borderP, 900, 700);
+        scene.getStylesheets().add("hekostyling.css");
+        primaryStage.setScene(scene);
+}
+
+
+    private TableView<Dispensation> createTable() {
         TableView<Dispensation> tView = new TableView<Dispensation>();
-        // Start knappen
+
         Button startDispButton = new Button("Kom i gang");
         startDispButton.setOnAction(e -> {
-            popUp.opretDispensation(gui.ec, tView, null, false);// , tView
+            popUp.opretDispensation(tView, null, false);// , tView
         });
 
         tView.setPlaceholder(startDispButton);
@@ -68,32 +78,20 @@ public class DispensationsMenu {
             TableRow<Dispensation> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                    // TODO Opret - rediger i dispensations metode.
                     Dispensation clickedRow = row.getItem();
-                    popUp.opretDispensation(gui.ec, tView, clickedRow, true);
+                    popUp.opretDispensation(tView, clickedRow, true);
                 }
                 if (row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 
-                    popUp.opretDispensation(gui.ec, tView, null, false);// , tView
+                    popUp.opretDispensation(tView, null, false);// , tView
                 }
             });
             return row;
         });
-
-        Tab tab1 = new Tab("Aktive dispensationer");
-        tab1.setClosable(false);
-        tab1.setContent(tView);
-        tP.getTabs().add(tab1);
-
-        Scene scene = gui.gui.getScene();
-
-        scene = new Scene(borderP, 900, 700);
-        scene.getStylesheets().add("hekostyling.css");
-        primaryStage.setScene(scene);
+        return tView;
     }
 
     private ObservableList<Dispensation> getDispensationer() {
-        // Der skal lægges ind og testes for 'isKlaret'
         ArrayList<Dispensation> alleDisps = gui.ec.getDispensationer();
         ArrayList<Dispensation> temp = new ArrayList<Dispensation>();
 
@@ -102,8 +100,7 @@ public class DispensationsMenu {
                 temp.add(d);
         }
 
-        ObservableList<Dispensation> dispensationer = FXCollections.observableArrayList(temp);
-        return dispensationer;
+        return FXCollections.observableArrayList(temp);
 
     }
 }

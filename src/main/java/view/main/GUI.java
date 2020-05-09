@@ -33,7 +33,6 @@ public class GUI {
 
 	public GUI() {
 		gui = GuiSingleton.getInstance();
-		// this.ec = ec;
 	}
 
 
@@ -72,34 +71,7 @@ public class GUI {
 		});
 
 		Button startButton = new Button("Start");
-		startButton.setOnAction(event -> {
-			String s = text.getText();
-			try {
-				gui.ec = new ExcelConnection(s);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			//Skriver  
-			try {
-				FileWriter fileWriter = new FileWriter(filename);
-
-				// Always wrap FileWriter in BufferedWriter.
-				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-				bufferedWriter.write(text.getText());
-
-				// Always close files.
-				bufferedWriter.close();
-			} catch (IOException ex1) {
-
-			}
-				try {
-					gui.hovedMenu.hovedMenu(primaryStage);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			
-		});
+		startButton.setOnAction(event -> startButtonClicked(text, filename, primaryStage));
 		Button annullerButton = new Button("Annuller");
 		annullerButton.setOnAction(event -> primaryStage.close());
 
@@ -116,6 +88,57 @@ public class GUI {
 		// The name of the file to open.
 
 		primaryStage.show();
+	}
+
+	private void startButtonClicked(TextField text, String filename, Stage primaryStage) {
+		{
+			String s = text.getText();
+			try {
+				gui.ec = new ExcelConnection(s);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			//Skriver
+			try {
+				FileWriter fileWriter = new FileWriter(filename);
+
+				// Always wrap FileWriter in BufferedWriter.
+				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+				bufferedWriter.write(text.getText());
+
+				// Always close files.
+				bufferedWriter.close();
+			} catch (IOException ex1) {
+
+			}
+			try {
+				gui.hovedMenu.hovedMenu(primaryStage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+	private void startButtonClicked2(TextField text, String filename, Stage primaryStage) {
+		{
+			String s = text.getText();
+			try {
+				gui.ec = new ExcelConnection(s);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+			//Skriver
+			try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))) {
+
+				bufferedWriter.write(text.getText());
+
+			} catch (IOException ex1) {
+
+			}
+				gui.hovedMenu.hovedMenu(primaryStage);
+
+		}
 	}
 
 	public Scene getScene() {
