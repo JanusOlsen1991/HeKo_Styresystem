@@ -4,6 +4,7 @@ import controller.ExcelConnection;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * 
@@ -38,14 +39,14 @@ public class Dispensation {
 	 *            Denne parameter gives hvis ikke der gives et ID.
 	 */
 	public Dispensation(Beboer beboer, LocalDate startDato, LocalDate slutDato, boolean iGang, String ID,
-                        ArrayList<Deadline> deadlines, ExcelConnection ec) {
+                        ArrayList<Deadline> deadlines) {
 		this.beboer = beboer;
 		this.startDato = startDato;
 		this.slutDato = slutDato;
 		this.iGang = iGang;
 		this.deadlines = deadlines;
 		if (ID == null) {
-			ID = "disp" + ec.getDispensationer().size();
+			this.ID = UUID.randomUUID().toString();
 			//Bør have reference til Deadlines
 
 		} else {

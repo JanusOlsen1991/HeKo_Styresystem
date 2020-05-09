@@ -20,13 +20,6 @@ public class GUI_PopUps_Deadlines {
 	public GUI_PopUps_Deadlines() {
 		this.gui = GuiSingleton.getInstance();
 	}
-
-/*	public ArrayList<Deadline> getList() {
-		return list;
-	}
-	public void setList(ArrayList<Deadline> list) {
-		this.list = list;
-	}*/
 	public void createDeadline(ExcelConnection ec, TableView<Deadline> tView) {
 
 		// stage.initModality(Modality.APPLICATION_MODAL);

@@ -143,8 +143,7 @@ public class ExcelConnection {
 																								// ved en metode til at
 				// separere '.' og hente tilhørende deadlines
 
-				Dispensation dispensation = new Dispensation(beboer, dispStart, dispSlut, iGang, dispID, dispDeadlines,
-						null);
+				Dispensation dispensation = new Dispensation(beboer, dispStart, dispSlut, iGang, dispID, dispDeadlines);
 				dispensationer.add(dispensation);
 
 			}

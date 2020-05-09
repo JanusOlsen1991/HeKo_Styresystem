@@ -192,7 +192,6 @@ public class GUI_PopUps {
 	@SuppressWarnings("unchecked")
 	public void opretDispensation(ExcelConnection ec, TableView<Dispensation> tableView, Dispensation dispensation, boolean rediger) {
 		stage.setTitle("Rediger beboeroplysninger");
-//		 stage.initModality(Modality.APPLICATION_MODAL);
 
 		GridPane layout = new GridPane();
 		layout.setVgap(5);
@@ -336,14 +335,11 @@ public class GUI_PopUps {
 
 			Beboer b = ec.findBeboer(værelse.getText());
 			Dispensation disp;
-			if(rediger == true) {
-				
-			disp = new Dispensation(b, startDato.getValue(), slutDato.getValue(), iGang, null, listDeads,
-					ec);
-			} else //TODO Der skal findes frem til hvorfor der ikke oprettes og gemmes en ny
-				disp = new Dispensation(b, startDato.getValue(), slutDato.getValue(), iGang, dispensation.getID(), listDeads,
-						ec);
-
+			if(rediger != true) {
+				disp = new Dispensation(b, startDato.getValue(), slutDato.getValue(), iGang, null, listDeads);
+			} else {
+				disp = new Dispensation(b, startDato.getValue(), slutDato.getValue(), iGang, dispensation.getID(), listDeads);
+			}
 			ec.opretDispensationIExcel(disp);
 			ec.getDispensationer().clear();
 			ec.hentDispensationerFraExcel();
@@ -388,7 +384,7 @@ public class GUI_PopUps {
 
 		Scene scene = new Scene(layout);
 		stage.setScene(scene);
-		stage.showAndWait();
+		stage.show();
 	}
 
 	public void redigerBeboeroplysninger(Beboer beboer, ExcelConnection ec, TableView<Beboer> tView, boolean fremleje) {
