@@ -32,27 +32,25 @@ public class ExcelConnection {
 	private ArrayList<Studiekontrol> studiekontroller = new ArrayList<Studiekontrol>();
 	private ArrayList<Værelsesudlejning> værelsesudlejning = new ArrayList<Værelsesudlejning>();
 	private ArrayList<Dispensation> dispensationer = new ArrayList<Dispensation>();
-	private String filnavn = null; // "IndstillingsInfo.xlsx"; //TODO skal tage i mod filplaceringen i konstruktøren
+	private String filnavn = null;
 
 
 	public ExcelConnection(String excelplacering) throws Exception{
 		this.filnavn = excelplacering;
 		
 		// TODO nødt til at finde på noget så det hele ikke slettes når den ikke kan finde filen
-				try (FileInputStream fis = new FileInputStream(filnavn)) {// evt. bare et tjek istedet for at oprette fis
-					hentBeboereFraExcel();
+				try (FileInputStream fis = new FileInputStream(filnavn)) {
 					hentDeadlinesFraExcel();
-					hentFremlejerFraExcel();
-					hentDispensationerFraExcel();
-					hentStudiekontrollerfraExcel();
-					hentVærelsesudlejningFraExcel();
+					new Thread(() -> {
+						hentBeboereFraExcel();
+						hentFremlejerFraExcel();
+						hentDispensationerFraExcel();
+						hentStudiekontrollerfraExcel();
+						hentVærelsesudlejningFraExcel();
+					}).start();
 
-					fis.close();
 				} catch (Exception e) {
-					System.out.println("Fil Oprettet");
 					e.printStackTrace();
-
-					//createExcelFile();
 				}
 
 			}
@@ -413,9 +411,7 @@ public class ExcelConnection {
 			}
 			fis.close();
 			workbook.close();
-		} catch (EncryptedDocumentException | IOException e) {
-			e.printStackTrace();
-		} catch (InvalidFormatException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -430,23 +426,24 @@ public class ExcelConnection {
 	 * @return Enum tilsvarende string der gemmes i Exceldokumentet
 	 */
 	public Enum<Studiekontrolstatus> konverterStringTilEnum(String s) {
-		Enum<Studiekontrolstatus> status;
 		switch (s) {
 		case "Ikke i gang":
-			status = Studiekontrolstatus.IKKEIGANG;
-			return status;
+			return Studiekontrolstatus.IKKEIGANG;
 		case "Modtaget, ikke godkendt":
-			status = Studiekontrolstatus.MODTAGETIKKEGODKENDT;
-			return status;
+			return Studiekontrolstatus.MODTAGETIKKEGODKENDT;
 		case "Ikke Modtaget":
-			status = Studiekontrolstatus.IKKEAFLEVERET;
-			return status;
+			return Studiekontrolstatus.IKKEAFLEVERET;
 		case "Sendt til boligselskab":
-			status = Studiekontrolstatus.SENDTTILBOLIGSELSKAB;
-			return status;
+			return Studiekontrolstatus.SENDTTILBOLIGSELSKAB;
 		case "Godkendt":
-			status = Studiekontrolstatus.GODKENDT;
-			return status;
+			return Studiekontrolstatus.GODKENDT;
+		case "Modtaget og godkendt, men afslutter uddannelse." :
+			return Studiekontrolstatus.MODTAGETAFSLUTTERUDDANNELSE;
+		case "Dispensation" :
+			return Studiekontrolstatus.DISPENSATION;
+		case "Fremlejer værelse" :
+			return Studiekontrolstatus.FREMLEJER;
+
 		default:
 			return null;
 		}
@@ -462,27 +459,7 @@ public class ExcelConnection {
 	 * @return String på studiekontrolstatus
 	 */
 	public static String konverterEnumTilString(Studiekontrolstatus studiekontrolstatus) {
-		String s;
-		switch (studiekontrolstatus) {
-		case IKKEIGANG:
-			s = "Ikke i gang";
-			return s;
-		case MODTAGETIKKEGODKENDT:
-			s = "Modtaget, ikke godkendt";
-			return s;
-		case IKKEAFLEVERET:
-			s = "Ikke Modtaget";
-			return s;
-		case SENDTTILBOLIGSELSKAB:
-			s = "Sendt til boligselskab";
-			return s;
-		case GODKENDT:
-			s = "Godkendt";
-			return s;
-		default:
-			return "";
-		}
-
+		return studiekontrolstatus.status;
 	}
 
 
