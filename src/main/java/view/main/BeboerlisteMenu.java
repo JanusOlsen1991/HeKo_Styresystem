@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import model.Beboer;
 import view.GuiSingleton;
 import view.popups.GUI_PopUps;
+import view.utils.TableColumnFormatter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -43,14 +44,7 @@ public class BeboerlisteMenu implements IParentTable{
         BorderPane borderP = new BorderPane();
 
         Button tilbageButton = new Button("Tilbage");
-        tilbageButton.setOnAction(e -> {
-            try {
-                gui.hovedMenu.hovedMenu(primaryStage);
-            } catch (Exception e1) {
-
-                e1.printStackTrace();
-            }
-        });
+        tilbageButton.setOnAction(e -> gui.hovedMenu.hovedMenu(primaryStage));
 
         VBox vb = new VBox(tilbageButton);
         borderP.setLeft(vb);
@@ -183,6 +177,7 @@ public class BeboerlisteMenu implements IParentTable{
         navnColumn.setCellValueFactory(new PropertyValueFactory<>("navn"));
         TableColumn<Beboer, LocalDate> indflytningColumn = new TableColumn<Beboer, LocalDate>("indflytningsdato");
         indflytningColumn.setCellValueFactory(new PropertyValueFactory<>("indflytningsdato"));
+        TableColumnFormatter.formatDate(indflytningColumn);
         TableColumn<Beboer, String> telefonColumn = new TableColumn<Beboer, String>("Telefonnummer");
         telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefonnummer"));
         TableColumn<Beboer, String> uddStedColumn = new TableColumn<Beboer, String>("Uddannelsessted");
@@ -190,13 +185,19 @@ public class BeboerlisteMenu implements IParentTable{
         TableColumn<Beboer, String> uddannelseColumn = new TableColumn<Beboer, String>("Uddannelsesretning");
         uddannelseColumn.setCellValueFactory(new PropertyValueFactory<>("uddannelsesretning"));
         TableColumn<Beboer, LocalDate> påbegyndtUddColumn = new TableColumn<Beboer, LocalDate>("Uddannelse påbegyndt");
+        TableColumnFormatter.formatDate(påbegyndtUddColumn);
+
         påbegyndtUddColumn.setCellValueFactory(new PropertyValueFactory<>("påbegyndtDato"));
         TableColumn<Beboer, LocalDate> afslutningUddColumn = new TableColumn<Beboer, LocalDate>(
                 "Uddannelse forventes afsluttet");
         afslutningUddColumn.setCellValueFactory(new PropertyValueFactory<>("forventetAfsluttetDato"));
+        TableColumnFormatter.formatDate(afslutningUddColumn);
+
         TableColumn<Beboer, LocalDate> lejeaftalensUdløbColumn = new TableColumn<Beboer, LocalDate>(
                 "Lejeaftalens udløb");
         lejeaftalensUdløbColumn.setCellValueFactory(new PropertyValueFactory<>("lejeaftalensUdløb"));
+        TableColumnFormatter.formatDate(lejeaftalensUdløbColumn);
+
 
         tableView.getColumns().addAll(værelseColumn, navnColumn, indflytningColumn, telefonColumn, uddStedColumn,
                 uddannelseColumn, påbegyndtUddColumn, afslutningUddColumn, lejeaftalensUdløbColumn);

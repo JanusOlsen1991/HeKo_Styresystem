@@ -15,6 +15,7 @@ import model.Studiekontrol;
 import model.Studiekontrolstatus;
 import view.GuiSingleton;
 import view.popups.GUI_PopUps;
+import view.utils.TableColumnFormatter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -62,22 +63,38 @@ public class StudiekontrolMenu {
         // kolloner til Tableviews
         TableColumn<Beboer, String> værelseColumn = new TableColumn<Beboer, String>("Værelse");
         værelseColumn.setCellValueFactory(new PropertyValueFactory<>("værelse"));
+
         TableColumn<Beboer, String> navnColumn = new TableColumn<Beboer, String>("Navn");
         navnColumn.setCellValueFactory(new PropertyValueFactory<>("navn"));
+
         TableColumn<Beboer, LocalDate> indflytningColumn = new TableColumn<Beboer, LocalDate>("indflytningsdato");
         indflytningColumn.setCellValueFactory(new PropertyValueFactory<>("indflytningsdato"));
+        TableColumnFormatter.formatDate(indflytningColumn);
+
+
         TableColumn<Beboer, String> uddRetningColumn = new TableColumn<Beboer, String>("Uddannelsesretning");
         uddRetningColumn.setCellValueFactory(new PropertyValueFactory<>("uddannelsesretning"));
+
         TableColumn<Beboer, String> uddStedColumn = new TableColumn<Beboer, String>("Uddannelsessted");
         uddStedColumn.setCellValueFactory(new PropertyValueFactory<>("uddannelsessted"));
+
         TableColumn<Beboer, LocalDate> påbegyndtUddColumn = new TableColumn<Beboer, LocalDate>("Uddannelse påbegyndt");
         påbegyndtUddColumn.setCellValueFactory(new PropertyValueFactory<>("påbegyndtDato"));
+        TableColumnFormatter.formatDate(påbegyndtUddColumn);
+
+
         TableColumn<Beboer, LocalDate> afslutningUddColumn = new TableColumn<Beboer, LocalDate>(
                 "Uddannelse forventes afsluttet");
         afslutningUddColumn.setCellValueFactory(new PropertyValueFactory<>("forventetAfsluttetDato"));
+        TableColumnFormatter.formatDate(afslutningUddColumn);
+
+
         TableColumn<Beboer, LocalDate> lejeaftalensUdløbColumn = new TableColumn<Beboer, LocalDate>(
                 "Lejeaftalens udløb");
         lejeaftalensUdløbColumn.setCellValueFactory(new PropertyValueFactory<>("lejeaftalensUdløb"));
+        TableColumnFormatter.formatDate(lejeaftalensUdløbColumn);
+
+
         TableColumn<Beboer, String> studieKStatColumn = new TableColumn<Beboer, String>("Status på studiekontrol");
         studieKStatColumn.setCellValueFactory(new PropertyValueFactory<>("statusPåStudiekontrol"));
 
@@ -139,19 +156,27 @@ public class StudiekontrolMenu {
         navnColumn1.setCellValueFactory(new PropertyValueFactory<>("navn"));
         TableColumn<Beboer, LocalDate> indflytningColumn1 = new TableColumn<Beboer, LocalDate>("indflytningsdato");
         indflytningColumn1.setCellValueFactory(new PropertyValueFactory<>("indflytningsdato"));
+        TableColumnFormatter.formatDate(indflytningColumn1);
+
         TableColumn<Beboer, String> uddRetningColumn1 = new TableColumn<Beboer, String>("Uddannelsesretning");
         uddRetningColumn1.setCellValueFactory(new PropertyValueFactory<>("uddannelsesretning"));
         TableColumn<Beboer, String> uddStedColumn1 = new TableColumn<Beboer, String>("Uddannelsessted");
         uddStedColumn1.setCellValueFactory(new PropertyValueFactory<>("uddannelsessted"));
         TableColumn<Beboer, LocalDate> påbegyndtUddColumn1 = new TableColumn<Beboer, LocalDate>("Uddannelse påbegyndt");
         påbegyndtUddColumn1.setCellValueFactory(new PropertyValueFactory<>("påbegyndtDato"));
+        TableColumnFormatter.formatDate(påbegyndtUddColumn1);
+
         TableColumn<Beboer, LocalDate> afslutningUddColumn1 = new TableColumn<Beboer, LocalDate>(
                 "Uddannelse forventes afsluttet");
         afslutningUddColumn1.setCellValueFactory(new PropertyValueFactory<>("forventetAfsluttetDato"));
+        TableColumnFormatter.formatDate(afslutningUddColumn1);
+
         TableColumn<Beboer, LocalDate> lejeaftalensUdløbColumn1 = new TableColumn<Beboer, LocalDate>(
                 "Lejeaftalens udløb");
         lejeaftalensUdløbColumn1.setCellValueFactory(new PropertyValueFactory<>("lejeaftalensUdløb"));
         TableColumn<Beboer, String> studieKStatColumn1 = new TableColumn<Beboer, String>();
+        TableColumnFormatter.formatDate(lejeaftalensUdløbColumn1);
+
         studieKStatColumn1.setCellValueFactory(new PropertyValueFactory<>("statusPåStudiekontrol"));
 
         TableView<Beboer> tView = new TableView<Beboer>();
@@ -207,7 +232,6 @@ public class StudiekontrolMenu {
                     if (b.getStudiekontrolstatus() != Studiekontrolstatus.SENDTTILBOLIGSELSKAB)
                         temp.add(b);
         }
-        ObservableList<Beboer> alleStudiekontroller = FXCollections.observableArrayList(temp);
-        return alleStudiekontroller;
+        return FXCollections.observableArrayList(temp);
     }
 }

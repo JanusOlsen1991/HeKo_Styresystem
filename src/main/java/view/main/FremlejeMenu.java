@@ -16,6 +16,7 @@ import model.Beboer;
 import view.GuiSingleton;
 import view.popups.GUI_PopUps;
 import view.popups.GUI_PopUps_Deadlines;
+import view.utils.TableColumnFormatter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -51,6 +52,8 @@ public class FremlejeMenu {
         navnColumn.setCellValueFactory(new PropertyValueFactory<>("navn"));
         TableColumn<Beboer, LocalDate> indflytningColumn = new TableColumn<Beboer, LocalDate>("indflytningsdato");
         indflytningColumn.setCellValueFactory(new PropertyValueFactory<>("indflytningsdato"));
+        TableColumnFormatter.formatDate(indflytningColumn);
+
         TableColumn<Beboer, String> telefonColumn = new TableColumn<Beboer, String>("Telefonnummer");
         telefonColumn.setCellValueFactory(new PropertyValueFactory<>("telefonnummer"));
         TableColumn<Beboer, String> uddStedColumn = new TableColumn<Beboer, String>("Uddannelsessted");
@@ -59,12 +62,18 @@ public class FremlejeMenu {
         uddannelseColumn.setCellValueFactory(new PropertyValueFactory<>("uddannelsesretning"));
         TableColumn<Beboer, LocalDate> påbegyndtUddColumn = new TableColumn<Beboer, LocalDate>("Uddannelse påbegyndt");
         påbegyndtUddColumn.setCellValueFactory(new PropertyValueFactory<>("påbegyndtDato"));
+        TableColumnFormatter.formatDate(påbegyndtUddColumn);
+
         TableColumn<Beboer, LocalDate> afslutningUddColumn = new TableColumn<Beboer, LocalDate>(
                 "Uddannelse forventes afsluttet");
         afslutningUddColumn.setCellValueFactory(new PropertyValueFactory<>("forventetAfsluttetDato"));
+        TableColumnFormatter.formatDate(afslutningUddColumn);
+
         TableColumn<Beboer, LocalDate> lejeaftalensUdløbColumn = new TableColumn<Beboer, LocalDate>(
                 "Lejeaftalens udløb");
         lejeaftalensUdløbColumn.setCellValueFactory(new PropertyValueFactory<>("lejeaftalensUdløb"));
+        TableColumnFormatter.formatDate(lejeaftalensUdløbColumn);
+
 
         tView.setRowFactory(tv -> {
             TableRow<Beboer> row = new TableRow<>();

@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import model.Værelsesudlejning;
 import view.GuiSingleton;
 import view.popups.GUI_PopUps;
+import view.utils.TableColumnFormatter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -87,6 +88,8 @@ public class VærelsesUdlejningsMenu {
         TableColumn<Værelsesudlejning, LocalDate> indflytningColumn = new TableColumn<Værelsesudlejning, LocalDate>(
                 "Overtagelsesdato");
         indflytningColumn.setCellValueFactory(new PropertyValueFactory<>("indflytningsdato"));
+        TableColumnFormatter.formatDate(indflytningColumn);
+
 
         tView1.setItems(getVærelsesUdlejning(true));
 
@@ -99,9 +102,13 @@ public class VærelsesUdlejningsMenu {
         TableColumn<Værelsesudlejning, LocalDate> indflytningColumn2 = new TableColumn<Værelsesudlejning, LocalDate>(
                 "Overtagelsesdato");
         indflytningColumn2.setCellValueFactory(new PropertyValueFactory<>("indflytningsdato"));
+        TableColumnFormatter.formatDate(indflytningColumn2);
+
         TableColumn<Værelsesudlejning, String> behandletDatoColumn2 = new TableColumn<Værelsesudlejning, String>(
                 "Behandlingsdato");
         behandletDatoColumn2.setCellValueFactory(new PropertyValueFactory<>("behandlingsdato"));
+        TableColumnFormatter.formatDate(behandletDatoColumn2);
+
         TableColumn<Værelsesudlejning, String> behandlerInitialerColumn2 = new TableColumn<Værelsesudlejning, String>(
                 "Behandler Initialer");
         behandlerInitialerColumn2.setCellValueFactory(new PropertyValueFactory<>("behandlerInitialer"));
@@ -110,7 +117,6 @@ public class VærelsesUdlejningsMenu {
             TableRow<Værelsesudlejning> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                    // TODO Lav noget her der retter info ved værelsesudlejning
                     Værelsesudlejning clickedRow = row.getItem();
                     popUp.udfyldLedigtVærelse(gui.ec, tView1, tView2, clickedRow, true);
                 }
