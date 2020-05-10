@@ -56,8 +56,14 @@ public class GUI_PopUps {
 		DatePicker uddSlut = new DatePicker();
 		DatePicker lejeaftalensUdløb = new DatePicker();
 		ComboBox<String> studiekontrolStatus = new ComboBox<String>();
-		studiekontrolStatus.getItems().addAll("Ikke i gang", "Modtaget, ikke godkendt", "Ikke Modtaget",
-				"Sendt til boligselskab", "Godkendt");
+		studiekontrolStatus.getItems().addAll(Studiekontrolstatus.IKKEIGANG.status,
+				Studiekontrolstatus.MODTAGETIKKEGODKENDT.status,
+				Studiekontrolstatus.MODTAGETAFSLUTTERUDDANNELSE.status,
+				Studiekontrolstatus.DISPENSATION.status,
+				Studiekontrolstatus.FREMLEJER.status,
+				Studiekontrolstatus.IKKEAFLEVERET.status,
+				Studiekontrolstatus.GODKENDT.status,
+				Studiekontrolstatus.SENDTTILBOLIGSELSKAB.status);
 
 		Button gemButton = new Button("Opret beboer");
 		gemButton.setOnAction(e -> {
@@ -111,7 +117,7 @@ public class GUI_PopUps {
 		Scene scene = new Scene(layout);
 
 		stage.setScene(scene);
-		stage.showAndWait();
+		stage.show();
 	}
 
 	public void opretNyFremlejer(TableView tView) {
@@ -225,8 +231,14 @@ public class GUI_PopUps {
 		
 
 
-		studiekontrolStatus.getItems().addAll("Ikke i gang", "Modtaget, ikke godkendt", "Ikke Modtaget",
-				"Sendt til boligselskab", "Godkendt");
+		studiekontrolStatus.getItems().addAll(Studiekontrolstatus.IKKEIGANG.status,
+				Studiekontrolstatus.MODTAGETIKKEGODKENDT.status,
+				Studiekontrolstatus.MODTAGETAFSLUTTERUDDANNELSE.status,
+				Studiekontrolstatus.DISPENSATION.status,
+				Studiekontrolstatus.FREMLEJER.status,
+				Studiekontrolstatus.IKKEAFLEVERET.status,
+				Studiekontrolstatus.GODKENDT.status,
+				Studiekontrolstatus.SENDTTILBOLIGSELSKAB.status);
 
 		// Venstre side af menuen
 		TableView<Deadline> tView = createTableView();
@@ -411,8 +423,14 @@ public class GUI_PopUps {
 		DatePicker uddSlut = new DatePicker();
 		DatePicker lejeaftalensUdløb = new DatePicker();
 		ComboBox<String> studiekontrolStatus = new ComboBox<String>();
-		studiekontrolStatus.getItems().addAll("Ikke i gang", "Modtaget, ikke godkendt", "Ikke Modtaget",
-				"Sendt til boligselskab", "Godkendt");
+		studiekontrolStatus.getItems().addAll(Studiekontrolstatus.IKKEIGANG.status,
+				Studiekontrolstatus.MODTAGETIKKEGODKENDT.status,
+				Studiekontrolstatus.MODTAGETAFSLUTTERUDDANNELSE.status,
+				Studiekontrolstatus.DISPENSATION.status,
+				Studiekontrolstatus.FREMLEJER.status,
+				Studiekontrolstatus.IKKEAFLEVERET.status,
+				Studiekontrolstatus.GODKENDT.status,
+				Studiekontrolstatus.SENDTTILBOLIGSELSKAB.status);
 
 		værelse.setText(beboer.getVærelse());
 		navn.setText(beboer.getNavn());
@@ -767,8 +785,14 @@ public class GUI_PopUps {
 		DatePicker uddSlut = new DatePicker();
 		DatePicker lejeaftalensUdløb = new DatePicker();
 		ComboBox<String> studiekontrolStatus = new ComboBox<String>();
-		studiekontrolStatus.getItems().addAll("Ikke i gang", "Modtaget, ikke godkendt", "Ikke Modtaget",
-				"Sendt til boligselskab", "Godkendt");
+		studiekontrolStatus.getItems().addAll(Studiekontrolstatus.IKKEIGANG.status,
+				Studiekontrolstatus.MODTAGETIKKEGODKENDT.status,
+				Studiekontrolstatus.MODTAGETAFSLUTTERUDDANNELSE.status,
+				Studiekontrolstatus.DISPENSATION.status,
+				Studiekontrolstatus.FREMLEJER.status,
+				Studiekontrolstatus.IKKEAFLEVERET.status,
+				Studiekontrolstatus.GODKENDT.status,
+				Studiekontrolstatus.SENDTTILBOLIGSELSKAB.status);
 		if(retBeboerOplysninger == true) {
 			Beboer b = ec.findBeboer(værelse.getText());
 			navn.setText(b.getNavn());
