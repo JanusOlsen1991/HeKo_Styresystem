@@ -1,29 +1,19 @@
 package view.main;
 
 import controller.ExcelConnection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.geometry.Insets;
+
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import model.*;
+
 import view.GuiSingleton;
 import view.popups.GUI_PopUps;
 import view.popups.GUI_PopUps_Deadlines;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
+
 
 public class GUI {
 	private Scene scene;
@@ -45,20 +35,13 @@ public class GUI {
 		// finder fil-stien
 		String filename = "Excelplacering.txt";
 		String filepath = null;
-		try {
-
-			FileReader fileReader = new FileReader(filename);
-
-			// Always wrap FileReader in BufferedReader.
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
 
 			filepath = bufferedReader.readLine();
 			text.setText(filepath);
 
-			bufferedReader.close();
-
-		} catch (Exception ex) {
-			//
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		Button findFilButton = new Button("Ændr filplacering");
@@ -117,26 +100,6 @@ public class GUI {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
-		}
-	}
-	private void startButtonClicked2(TextField text, String filename, Stage primaryStage) {
-		{
-			String s = text.getText();
-			try {
-				gui.ec = new ExcelConnection(s);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			//Skriver
-			try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))) {
-
-				bufferedWriter.write(text.getText());
-
-			} catch (IOException ex1) {
-
-			}
-				gui.hovedMenu.hovedMenu(primaryStage);
 
 		}
 	}
