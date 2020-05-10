@@ -32,14 +32,13 @@ public class ExcelConnection {
 	private ArrayList<Studiekontrol> studiekontroller = new ArrayList<Studiekontrol>();
 	private ArrayList<Værelsesudlejning> værelsesudlejning = new ArrayList<Værelsesudlejning>();
 	private ArrayList<Dispensation> dispensationer = new ArrayList<Dispensation>();
-	private String filnavn = null;
+	private final String filnavn;
 
 
-	public ExcelConnection(String excelplacering) throws Exception{
+	public ExcelConnection(String excelplacering){
 		this.filnavn = excelplacering;
 		
-		// TODO nødt til at finde på noget så det hele ikke slettes når den ikke kan finde filen
-				try (FileInputStream fis = new FileInputStream(filnavn)) {
+				try {
 					hentDeadlinesFraExcel();
 					new Thread(() -> {
 						hentBeboereFraExcel();
