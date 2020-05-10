@@ -9,10 +9,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Deadline;
 import model.Dispensation;
 import view.GuiSingleton;
 import view.popups.GUI_PopUps;
+import view.utils.TableColumnFormatter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -68,8 +68,12 @@ public class DispensationsMenu {
         navnColumn.setCellValueFactory(new PropertyValueFactory<>("beboerNavn"));
         TableColumn<Dispensation, LocalDate> startdatoColumn = new TableColumn<Dispensation, LocalDate>("Start dato");
         startdatoColumn.setCellValueFactory(new PropertyValueFactory<>("startDato"));
+        TableColumnFormatter.formatDate(startdatoColumn);
+
         TableColumn<Dispensation, LocalDate> slutdatoColumn = new TableColumn<Dispensation, LocalDate>("Slut dato");
         slutdatoColumn.setCellValueFactory(new PropertyValueFactory<>("slutDato"));
+        TableColumnFormatter.formatDate(slutdatoColumn);
+
 
         tView.getColumns().addAll(værelseColumn, navnColumn, startdatoColumn, slutdatoColumn);
         tView.getItems().addAll(getDispensationer());

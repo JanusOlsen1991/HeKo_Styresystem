@@ -16,8 +16,13 @@ import javafx.stage.Stage;
 import model.Deadline;
 import view.GuiSingleton;
 import view.popups.GUI_PopUps_Deadlines;
+import view.utils.TableColumnFormatter;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -63,6 +68,8 @@ public class HovedMenu {
 
         TableColumn<Deadline, LocalDate> hvornårColumn = new TableColumn<Deadline, LocalDate>("Hvornår");
         hvornårColumn.setCellValueFactory(new PropertyValueFactory<>("hvornår"));
+        TableColumnFormatter.formatDate(hvornårColumn);
+
 
         TableColumn<Deadline, String> hvadColumn = new TableColumn<Deadline, String>("Hvad:");
         hvadColumn.setCellValueFactory(new PropertyValueFactory<>("hvad"));

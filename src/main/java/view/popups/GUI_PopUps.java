@@ -18,6 +18,7 @@ import view.GuiSingleton;
 import view.main.GUI;
 import view.main.IParentTable;
 import view.main.StudiekontrolMenu;
+import view.utils.TableColumnFormatter;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -352,7 +353,9 @@ public class GUI_PopUps {
 	}
 	private TableView<Deadline> createTableView() {
 		TableColumn<Deadline, LocalDate> hvornårColumn = new TableColumn<Deadline, LocalDate>("Dato");
-		hvornårColumn.setCellValueFactory(new PropertyValueFactory<>("hvornår")); // ændr i format så dato bliver: // dd/MM/YYYY
+		hvornårColumn.setCellValueFactory(new PropertyValueFactory<>("hvornår"));
+		TableColumnFormatter.formatDate(hvornårColumn);
+
 		TableColumn<Deadline, String> hvadColumn = new TableColumn<Deadline, String>("Hvad:");
 		hvadColumn.setCellValueFactory(new PropertyValueFactory<>("hvad"));
 		TableColumn<Deadline, String> hvemColumn = new TableColumn("Hvem:");
