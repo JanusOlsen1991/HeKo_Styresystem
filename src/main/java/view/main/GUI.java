@@ -17,8 +17,6 @@ import java.io.*;
 
 public class GUI {
 	private Scene scene;
-	static GUI_PopUps popUp = new GUI_PopUps();
-	GUI_PopUps_Deadlines popUpDead = new GUI_PopUps_Deadlines();
 	static GuiSingleton gui;
 
 	public GUI() {
@@ -65,7 +63,7 @@ public class GUI {
 		gP.add(startButton, 3, 5);
 		gP.add(annullerButton, 4, 5);
 
-		Scene scene = new Scene(gP);
+		scene = new Scene(gP);
 		primaryStage.setScene(scene);
 		
 		// The name of the file to open.
