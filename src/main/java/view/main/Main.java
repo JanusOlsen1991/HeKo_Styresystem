@@ -16,6 +16,6 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 //		ExcelConnection ec = new ExcelConnection("");
 		GUI g = new GUI();
-	g.filplacering(primaryStage);
+	g.start(primaryStage);
 	}
 }

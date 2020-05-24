@@ -24,20 +24,7 @@ public class Filplaceringer {
         read();
     }
 
-    public static void main(String[] args) {
-        Filplaceringer filplaceringer = new Filplaceringer();
-        /*filplaceringer.updateFilePath("janus","awesome");
-        filplaceringer.updateFilePath("janus2","cool");
-        filplaceringer.updateFilePath("janus3","ok");
-        filplaceringer.updateFilePath("janus4","nice");
-        filplaceringer.write();*/
-        System.out.println(filplaceringer.getPath("janus"));
-        System.out.println(filplaceringer.getPath("janus2"));
-        System.out.println(filplaceringer.getPath("janus3"));
-        System.out.println(filplaceringer.getPath("janus4"));
-
-    }
-    public void write() {
+    private void write() {
         try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(FILE_NAME))) {
 
             for(Map.Entry<String, String> entry : ressources.entrySet()) {
@@ -73,6 +60,7 @@ public class Filplaceringer {
     }
     public void updateFilePath(String key, String value) {
         ressources.put(key, value);
+        write();
     }
 
 }

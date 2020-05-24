@@ -11,10 +11,6 @@ import javafx.stage.Stage;
 import view.GuiSingleton;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class GUI {
@@ -24,34 +20,18 @@ public class GUI {
 	public GUI() {
 		gui = GuiSingleton.getInstance();
 	}
+	public String excel;
 
 
 
-	public void filplacering(Stage primaryStage) {
+	public void start(Stage primaryStage) {
 
 		GridPane gP = new GridPane();
 		Label l = new Label("Filplacering:");
 		TextField text = new TextField();
-		// finder fil-stien
-		String filename = "test.txt";
-		String excelPath = null;
-		//FileReader
-		Map<String, String> filplaceringer = new HashMap<>();
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
 
-			List<String[]> paths = new ArrayList<>();
-
-			while(bufferedReader.readLine()!= null)
-			excelPath = bufferedReader.readLine();
-
-
-			text.setText(excelPath);
-
-
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		excel = gui.filplaceringer.getPath(gui.excel);
+		text.setText(excel);
 
 		Button findFilButton = new Button("Ændr filplacering");
 		findFilButton.setOnAction(event -> {
@@ -63,7 +43,7 @@ public class GUI {
 		});
 
 		Button startButton = new Button("Start");
-		startButton.setOnAction(event -> startButtonClicked(text, filename, primaryStage));
+		startButton.setOnAction(event -> startButtonClicked(text.getText(), primaryStage));
 		Button annullerButton = new Button("Annuller");
 		annullerButton.setOnAction(event -> primaryStage.close());
 
@@ -76,30 +56,20 @@ public class GUI {
 
 		scene = new Scene(gP);
 		primaryStage.setScene(scene);
-		
-		// The name of the file to open.
 
 		primaryStage.show();
 	}
 
-	private void startButtonClicked(TextField text, String filename, Stage primaryStage) {
-		{
-			String s = text.getText();
+	private void startButtonClicked(String text, Stage primaryStage) {
+		gui.filplaceringer.updateFilePath("excel", text);
+
 			try {
-				gui.ec = new ExcelConnection(s);
+				gui.ec = new ExcelConnection(text);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))) {
-				//TODO change to new setup
-				//Write Map to it
-				bufferedWriter.write(text.getText());
 
-			} catch (IOException ex1) {
-
-			}
 				gui.hovedMenu.hovedMenu(primaryStage);
-		}
 	}
 
 	public Scene getScene() {

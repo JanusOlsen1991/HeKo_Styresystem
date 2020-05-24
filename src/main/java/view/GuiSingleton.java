@@ -3,7 +3,6 @@ package view;
 import controller.Filplaceringer;
 import controller.excel.ExcelConnection;
 import controller.word.WordConnection;
-import model.RessourceLocator;
 import view.main.*;
 
 public class GuiSingleton {
@@ -17,8 +16,13 @@ public class GuiSingleton {
     public static ExcelConnection ec;
     public static VærelsesUdlejningsMenu værelsesudlejningsmenu = new VærelsesUdlejningsMenu();
     public static StudiekontrolMenu studiekontrolMenu = new StudiekontrolMenu();
-    public static WordConnection wordConnection = new WordConnection();
     public static Filplaceringer filplaceringer = Filplaceringer.getInstance();
+
+    public String base = "Base.docx";
+    public String excel = "excel";
+    public String studiekontrolSeddel = "Studiekontrolsblanket.docx";
+    public String studieKontrolFølgeSeddel = "Følgeseddel.docx";
+    public String skabeloner = "skabeloner";
 
 
     private GuiSingleton(){

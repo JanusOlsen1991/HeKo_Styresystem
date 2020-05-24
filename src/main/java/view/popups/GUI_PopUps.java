@@ -1,6 +1,7 @@
 package view.popups;
 
 import controller.excel.ExcelConnection;
+import controller.word.WordConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -28,6 +29,7 @@ public class GUI_PopUps {
 	private Stage stage = new Stage();
 	private GUI_PopUps_Deadlines popUpDead = new GUI_PopUps_Deadlines();
 	private GuiSingleton gui = GuiSingleton.getInstance();
+
 
 	public void opretNyBeboeroplysninger(IParentTable baseGui) {
 		stage.setTitle("Rediger beboeroplysninger");
@@ -530,6 +532,20 @@ public class GUI_PopUps {
 		Label l4 = new Label("Afleveringsfrist/Afslutningsdato");
 		Label l5 = new Label("Lejeaftalens udløb");
 
+		Label filePathLabel = new Label("Filsti til skabeloner:");
+		TextField filepathText = new TextField();
+
+		String skabelonerString = gui.filplaceringer.getPath(gui.skabeloner);
+		filepathText.setText(skabelonerString);
+
+		Button findFilButton1 = new Button("Ændr filsti");
+		findFilButton1.setOnAction(event -> {
+			DirectoryChooser dir = new DirectoryChooser();
+			dir.setTitle("Vælg filplacering");
+			File studieKontrolSeddel = dir.showDialog(stage);
+			filepathText.setText(studieKontrolSeddel.getAbsolutePath()+"\\");
+
+		});
 
 
 		DatePicker startDato = new DatePicker();
@@ -545,10 +561,13 @@ public class GUI_PopUps {
 
 		Button påbegyndButton = new Button("Påbegynd studiekontrol");
 		påbegyndButton.setOnAction(e -> {
-			// TODO Skal også skrives til Word eller excel
 
 			ArrayList<Beboer> temp = ec
 					.findBeboereTilOpretStudiekontrol(ec.findMånedsNummer(udløbsmåned.getValue()));
+
+			//gem i filstier
+			gui.filplaceringer.updateFilePath(gui.skabeloner, filepathText.getText());
+
 
 			Studiekontrol studiekontrol = new Studiekontrol(temp, afleveringsfrist.getValue(),
 					påmindelsesdato.getValue(), startDato.getValue(),
@@ -564,7 +583,8 @@ public class GUI_PopUps {
 
 			new Thread(() -> {
 				LocalDate udløb = lejeAftalensUdløb.getValue();
-				GuiSingleton.wordConnection.startStudiekontrol(temp,startDato.getValue(),udløb, afleveringsfrist.getValue());
+				WordConnection wordConnection = new WordConnection();
+				wordConnection.startStudiekontrol(temp,startDato.getValue(),udløb, afleveringsfrist.getValue());
 			}).start();
 			
 			//laver deadlines til hovedmenu:
@@ -600,9 +620,12 @@ public class GUI_PopUps {
 		layout.add(afleveringsfrist, 12, 5);
 		layout.add(lejeAftalensUdløb, 15, 5);
 
+		layout.add(filePathLabel,3,7);
+		layout.add(filepathText,3,8);
+		layout.add(findFilButton1,4,8);
 
-		layout.add(påbegyndButton, 9, 7);
-		layout.add(annullerButton, 12, 7);
+		layout.add(påbegyndButton, 9, 15);
+		layout.add(annullerButton, 12, 15);
 
 		Scene scene = new Scene(layout);
 		stage.setScene(scene);
