@@ -1,16 +1,12 @@
 package view.popups;
 
-import controller.ExcelConnection;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import controller.excel.ExcelConnection;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import model.Deadline;
 import view.GuiSingleton;
-
-import java.util.ArrayList;
 
 public class GUI_PopUps_Deadlines {
 	private Stage stage = new Stage();

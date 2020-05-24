@@ -1,6 +1,6 @@
 package view.popups;
 
-import controller.ExcelConnection;
+import controller.excel.ExcelConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -15,13 +15,13 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.*;
 import view.GuiSingleton;
-import view.main.GUI;
 import view.main.IParentTable;
 import view.main.StudiekontrolMenu;
 import view.utils.TableColumnFormatter;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class GUI_PopUps {
@@ -528,6 +528,9 @@ public class GUI_PopUps {
 		Label l2 = new Label("Startdato");
 		Label l3 = new Label("Påmindelsesdato");
 		Label l4 = new Label("Afleveringsfrist/Afslutningsdato");
+		Label l5 = new Label("Lejeaftalens udløb");
+
+
 
 		DatePicker startDato = new DatePicker();
 		startDato.setValue(LocalDate.now());
@@ -537,6 +540,8 @@ public class GUI_PopUps {
 		udløbsmåned.getItems().addAll("Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August",
 				"September", "Oktober", "November", "December");
 		udløbsmåned.setValue(ec.findMånedsNavn((LocalDate.now().getMonthValue() + 4) % 12));
+		DatePicker lejeAftalensUdløb = new DatePicker();
+
 
 		Button påbegyndButton = new Button("Påbegynd studiekontrol");
 		påbegyndButton.setOnAction(e -> {
@@ -548,7 +553,7 @@ public class GUI_PopUps {
 			Studiekontrol studiekontrol = new Studiekontrol(temp, afleveringsfrist.getValue(),
 					påmindelsesdato.getValue(), startDato.getValue(),
 					ec.findMånedsNummer(udløbsmåned.getValue()), false, null);
-			
+
 			ec.opretStudiekontrollerIExcel(studiekontrol);
 			ec.getStudiekontroller().clear();
 			ec.hentStudiekontrollerfraExcel();
@@ -556,10 +561,15 @@ public class GUI_PopUps {
 					ec.findBeboereTilOpretStudiekontrol(ec.findMånedsNummer(udløbsmåned.getValue())));
 			Tab t = StudiekontrolMenu.opretStudiekontrolTab(ec.getStudiekontroller().get(ec.getStudiekontroller().size()-1));
 			tP.getTabs().add(t);
+
+			new Thread(() -> {
+				LocalDate udløb = lejeAftalensUdløb.getValue();
+				GuiSingleton.wordConnection.startStudiekontrol(temp,startDato.getValue(),udløb, afleveringsfrist.getValue());
+			}).start();
 			
 			//laver deadlines til hovedmenu:
-			String påmind = "Påmind beboere der indgår i " + udløbsmåned.getValue().toString() + "s studiekontrol om at de skal aflevere studiedokumentaion senest d. " + afleveringsfrist.getValue().toString();
-			String afslut = " Afslut studiekontrol for " + udløbsmåned.getValue().toString();
+			String påmind = "Påmind beboere der indgår i " + udløbsmåned.getValue() + "s studiekontrol om at de skal aflevere studiedokumentaion senest d. " + afleveringsfrist.getValue().toString();
+			String afslut = " Afslut studiekontrol for " + udløbsmåned.getValue();
 
 			Deadline dPåmind = new Deadline("Indstillingen", påmind, påmindelsesdato.getValue(), null);
 			ec.opretDeadlineIExcel(dPåmind); 
@@ -570,6 +580,8 @@ public class GUI_PopUps {
 			ec.opretDeadlineIExcel(dAfslut);
 			ec.getDeadlines().clear();
 			ec.hentDeadlinesFraExcel();
+
+
 			
 			stage.close();
 		});
@@ -579,11 +591,15 @@ public class GUI_PopUps {
 		layout.add(l2, 6, 3);
 		layout.add(l3, 9, 3);
 		layout.add(l4, 12, 3);
+		layout.add(l5, 15, 3);
+
 
 		layout.add(udløbsmåned, 3, 5);
 		layout.add(startDato, 6, 5);
 		layout.add(påmindelsesdato, 9, 5);
 		layout.add(afleveringsfrist, 12, 5);
+		layout.add(lejeAftalensUdløb, 15, 5);
+
 
 		layout.add(påbegyndButton, 9, 7);
 		layout.add(annullerButton, 12, 7);

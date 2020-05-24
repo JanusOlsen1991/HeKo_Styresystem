@@ -1,7 +1,5 @@
 package model;
 
-import controller.ExcelConnection;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;

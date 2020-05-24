@@ -1,6 +1,6 @@
 package model;
 
-import controller.ExcelConnection;
+import controller.excel.ExcelConnection;
 
 import java.time.LocalDate;
 

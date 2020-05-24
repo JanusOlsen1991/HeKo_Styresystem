@@ -1,6 +1,6 @@
 package view.main;
 
-import controller.ExcelConnection;
+import controller.excel.ExcelConnection;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,10 +9,12 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import view.GuiSingleton;
-import view.popups.GUI_PopUps;
-import view.popups.GUI_PopUps_Deadlines;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class GUI {
@@ -31,12 +33,21 @@ public class GUI {
 		Label l = new Label("Filplacering:");
 		TextField text = new TextField();
 		// finder fil-stien
-		String filename = "Excelplacering.txt";
-		String filepath = null;
+		String filename = "test.txt";
+		String excelPath = null;
+		//FileReader
+		Map<String, String> filplaceringer = new HashMap<>();
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))){
 
-			filepath = bufferedReader.readLine();
-			text.setText(filepath);
+			List<String[]> paths = new ArrayList<>();
+
+			while(bufferedReader.readLine()!= null)
+			excelPath = bufferedReader.readLine();
+
+
+			text.setText(excelPath);
+
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,26 +90,15 @@ public class GUI {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-			//Skriver
-			try {
-				FileWriter fileWriter = new FileWriter(filename);
-
-				// Always wrap FileWriter in BufferedWriter.
-				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
+			try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))) {
+				//TODO change to new setup
+				//Write Map to it
 				bufferedWriter.write(text.getText());
 
-				// Always close files.
-				bufferedWriter.close();
 			} catch (IOException ex1) {
 
 			}
-			try {
 				gui.hovedMenu.hovedMenu(primaryStage);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
 		}
 	}
 
