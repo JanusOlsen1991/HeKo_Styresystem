@@ -373,8 +373,9 @@ public class ExcelConnection {
 
 				String navn = "";
 				try{
-				if( row.getCell(kollonnenummer+1).getStringCellValue()!=null)
-					navn = row.getCell(++kollonnenummer).getStringCellValue();}
+				if(row.getCell(kollonnenummer+1)!=null)
+					navn = row.getCell(++kollonnenummer).getStringCellValue();
+					System.out.println(navn);}
 				 catch(NullPointerException e) {
 					e.printStackTrace();
 				 }
@@ -976,7 +977,10 @@ public class ExcelConnection {
 //				String sVærelse = workbook.getSheetAt(5).getRow(i).getCell(1).getStringCellValue(); // Hvilken celle?
 //				String sNavn = workbook.getSheetAt(5).getRow(i).getCell(2).getStringCellValue(); // Hvilken celle?
 				String idCheck = workbook.getSheetAt(5).getRow(i).getCell(5).getStringCellValue();
-				String signedByCheck = workbook.getSheetAt(5).getRow(i).getCell(4).getStringCellValue(); //Hvis der ikke er nogen værdi her, så er det et ledigt værelse der skal udfyldes
+				String signedByCheck = "";
+				try{
+				signedByCheck = workbook.getSheetAt(5).getRow(i).getCell(4).getStringCellValue(); //Hvis der ikke er nogen værdi her, så er det et ledigt værelse der skal udfyldes
+				System.out.println(signedByCheck);} catch (Exception e) { e.printStackTrace();}
 				boolean nytVærelse =true;
 				if( signedByCheck == null || !signedByCheck.equals(""))
 					nytVærelse = false;
