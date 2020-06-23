@@ -17,5 +17,6 @@ public class Main extends Application {
 //		ExcelConnection ec = new ExcelConnection("");
 		GUI g = new GUI();
 	g.start(primaryStage);
+	//hej anton
 	}
 }
